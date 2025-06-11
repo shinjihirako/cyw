@@ -8,7 +8,7 @@ Includes full test coverage and Docker support for easy development and CI integ
 
 ##  What It Does
 
-`CountingWordBlazor` features a `TrieWordCounter` that:
+`CountingWordBlazor` features a `WordCounter` that:
 
 - Inserts **unique** words into a `Trie`
 - Counts only words that return `true` from `Search`
