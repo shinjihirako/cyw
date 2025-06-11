@@ -1,0 +1,76 @@
+﻿@page "/countyourwords"
+@using CountingWordBlazor.Domain
+@using System.Text.RegularExpressions
+@using CountingWordBlazor.Domain.Contracts
+@inject ITextTokenizer TextTokenizer
+@inject IWordCounter WordCounter
+@inject IJSRuntime JS
+
+<h3>Count Your Words</h3>
+
+<InputFile OnChange="HandleFileSelected" accept=".txt" />
+
+@if (!string.IsNullOrEmpty(FeedbackMessage))
+{
+    <p>@FeedbackMessage</p>
+}
+else if (WordCounts?.Any() == true)
+{
+    <h4>Results</h4>
+    <table class="table">
+        <thead>
+            <tr> Number of words: @WordCounts.Values.Sum()</tr>
+            <tr>
+                <th>Word</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            @foreach (var kvp in WordCounts.OrderBy(w => w.Key))
+            {
+                <tr>
+                    <td>@kvp.Key</td>
+                    <td>@kvp.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}
+else if (IsProcessing)
+{
+    <p>Processing file...</p>
+}
+
+@code {
+    private Dictionary<string, int> WordCounts = new();
+    private bool IsProcessing = false;
+    private string FeedbackMessage = null;
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        IsProcessing = true;
+        FeedbackMessage = null;
+        WordCounts.Clear();
+
+        var file = e.File;
+        using var reader = new StreamReader(file.OpenReadStream());
+        var content = await reader.ReadToEndAsync();
+
+        if (string.IsNullOrWhiteSpace(content))
+        {
+            FeedbackMessage = "The file is empty.";
+            IsProcessing = false;
+            return;
+        }
+
+        var words = TextTokenizer.Tokenize(content);
+
+        WordCounts = WordCounter.CountWords(words);
+
+        var totalNumberWords = WordCounts.Values.Sum();
+
+        IsProcessing = false;
+    }
+}

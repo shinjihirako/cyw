@@ -1,0 +1,32 @@
+﻿@page "/about"
+
+<h3>CountYourWords</h3>
+
+<div class="alert alert-secondary mt-4">
+    <span class="oi oi-pencil me-2" aria-hidden="true"></span>
+    <strong>CountYourWords</strong>
+
+    <span class="text-wrap">
+        <span class="text-break"> allows you to upload a .txt file and automatically performs word frequency analysis. The application tokenizes the text, normalizes word casing, and returns a list of unique words sorted alphabetically along with their frequency count.</span>
+
+        This tool is useful for basic text mining, log file inspection, or initial threat intelligence scans by highlighting word patterns or anomalies in textual data.
+
+        <a target="_blank" class="font-weight-bold link-dark" href="">code</a>
+    </span>
+
+</div>
+
+@code {
+
+}
+
+
+## 🐳 Run with Docker
+
+🔧 Step 1: Build the Image
+
+docker build -t countingwordblazor .
+
+🚀 Step 2: Run the Container
+
+docker run --rm countingwordblazor
