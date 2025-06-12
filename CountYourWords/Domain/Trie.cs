@@ -8,7 +8,6 @@ namespace CountingWordBlazor.Domain
     {
         public Dictionary<char, TrieNode> Children { get; set; } = new();
         public bool IsEndOfWord { get; set; } = false;
-        public string? FullWord { get; set; } = null;
     }
 }
 
@@ -27,7 +26,6 @@ public class Trie : ITrie
         }
 
         current.IsEndOfWord = true;
-        current.FullWord = word;
     }
 
     public bool Search(string word)
