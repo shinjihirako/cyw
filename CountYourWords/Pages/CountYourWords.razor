@@ -46,7 +46,7 @@ else if (IsProcessing)
 @code {
     private Dictionary<string, int> WordCounts = new();
     private bool IsProcessing = false;
-    private string FeedbackMessage = null;
+    private string? FeedbackMessage = null;
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
